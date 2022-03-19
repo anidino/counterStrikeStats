@@ -1,33 +1,43 @@
 import fetch from "node-fetch";
 
-// fetch("https://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid=240")
-//   .then(function (response) {
-//     return response.json();
-//   })
-//   .then(function (myJson) {
-//     console.log(JSON.stringify(myJson));
-//   });
-
 const url = "https://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid=240";
+
+class Achievement {
+  constructor(name, percent) {
+    this.name = name;
+    this.percent = percent;
+  }
+
+  printValues() {
+    if (this.percent === 0) {
+      console.log(`No one has completed the achievement: ${this.name}.`);
+    } else {
+      console.log(`${this.name} achievement has been completed by ${this.percent}% of people.`);
+    }
+  }
+}
 
 async function fetchData(url) {
   const response = await fetch(url);
   const jsonResponse = await response.json();
-  printAchievements(jsonResponse);
+  printData(jsonResponse);
 }
 
-function printAchievements(jsonData) {
-  const percentages = jsonData["achievementpercentages"];
-  const achievements = percentages["achievements"];
-  for (let achievement of achievements) {
-    console.log(achievement["name"]);
+function printData(jsonData) {
+  var achievementsArray = [];
+  const jsonObject = jsonData["achievementpercentages"];
+  const allachievements = jsonObject["achievements"];
+  for (let achievement of allachievements) {
+    var name = achievement["name"];
+    let percent = achievement["percent"];
+    // console.log(achievement["name"]);
+    let newAchievement = new Achievement(name, percent);
+    newAchievement.printValues();
+    achievementsArray.push(newAchievement);
   }
+  console.log(achievementsArray.length);
 }
 
 fetchData(url).catch(function () {
   console.log("Could not fetch data");
 });
-
-const apiKey = "E134E90D9AB67809526B537ABCF67C9C";
-
-const appId = "240";
