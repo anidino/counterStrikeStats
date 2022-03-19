@@ -14,3 +14,5 @@ A simple node app that fetches data from the Steam API to display the percentage
 ## How to Use
 
 Once you have the code, simply navigate to the directory where you have stored the app, do an npm install, and then run the app using the command npm run build. The achievement data will be displayed in your terminal. Make sure to have "type": "module" in your package.json file.
+
+## ScreenShot
