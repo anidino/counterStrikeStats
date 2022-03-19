@@ -1,33 +1,32 @@
-// let age = 26;
-// age = 27;
+import fetch from "node-fetch";
 
-// age = age + 1;
+// fetch("https://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid=240")
+//   .then(function (response) {
+//     return response.json();
+//   })
+//   .then(function (myJson) {
+//     console.log(JSON.stringify(myJson));
+//   });
 
-// let health = 0.65;
+const url = "https://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid=240";
 
-// let isAlive = true;
-// isAlive = false;
+async function fetchData(url) {
+  const response = await fetch(url);
+  const jsonResponse = await response.json();
+  printAchievements(jsonResponse);
+}
 
-// isAlive = 5 > 2;
+function printAchievements(jsonData) {
+  const percentages = jsonData["achievementpercentages"];
+  const achievements = percentages["achievements"];
+  for (let achievement of achievements) {
+    console.log(achievement["name"]);
+  }
+}
 
-// const pi = 3.14159;
-// let numberOfLimbs = 4;
-
-// console.log(health);
-
-// var name = "Nimish";
-// var zenva = "Zenva";
-
-// var age = 26;
-
-// //string interpelation
-// let finalString = `Nimish is ${age} age years old`;
-
-// console.log(finalString);
-
-// zenva = zenva.padEnd(8, "."); //Zenva...
-
-// console.log(zenva);
+fetchData(url).catch(function () {
+  console.log("Could not fetch data");
+});
 
 const apiKey = "E134E90D9AB67809526B537ABCF67C9C";
 
